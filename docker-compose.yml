@@ -1,14 +1,11 @@
 version: '3.8'
 
 services:
-  staticWebServer:
-    container_name: staticWebServer
+  static-web-server:
+    container_name: static-web-server
     build: ./static-web-server
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:80"
     volumes:
-      - ./src:/var/www
-      - ./logs/nginx:/var/log/nginx
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./static-web-server/logs:/var/log/nginx
