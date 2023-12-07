@@ -1,11 +1,20 @@
 version: '3.8'
 
 services:
-  static-web-server:
-    container_name: static-web-server
+  static_web_server:
+    container_name: static_web_server
     build: ./static-web-server
-    restart: always
+    # restart: always
     ports:
       - "8080:80"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
+
+  #api_server:
+    #container_name: api_server
+    #build: ./api-server
+    # restart: always
+
+
+  #reverse_proxy:
+    #container_name: reverse_proxy

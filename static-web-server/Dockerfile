@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
-# Copy content into the container
+# copy the content into the container
 COPY ./content /www/data
 
-# Copy the nginx.conf
+# copy the nginx.conf into the container
 COPY ./nginx.conf /etc/nginx/nginx.conf

@@ -6,4 +6,8 @@
 
 
 ## Step 1: 
+
+
+## Step 2:
+
 `docker compose up --build`
