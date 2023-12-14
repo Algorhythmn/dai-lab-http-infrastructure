@@ -5,10 +5,12 @@ services:
     container_name: static_web_server
     build: ./static-web-server
     # restart: always
-    ports:
-      - "8080:80"
+    #ports:
+     # - "8080:80"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
+    labels:
+      - traefik.http.routers.static-web-server.rule=Host(`static-web-server.localhost`)
 
   #api_server:
     #container_name: api_server
@@ -16,5 +18,15 @@ services:
     # restart: always
 
 
-  #reverse_proxy:
-    #container_name: reverse_proxy
+  traefik:
+    image: traefik
+    command:
+      - --api.insecure=true  # Enable Traefik dashboard
+      - --providers.docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8081:80" # Web-server
+      - "8080:8080" # Dashboard
+
+
