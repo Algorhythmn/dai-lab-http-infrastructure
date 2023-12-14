@@ -1,3 +1,5 @@
+package ch.heig.dai.lab.http.api;
+
 public class Todo {
     private boolean isDone = false;
     private String text;

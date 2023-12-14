@@ -13,11 +13,12 @@ services:
       - traefik.http.routers.static-web-server.rule=Host(`localhost`)
       #- traefik.http.routers.static-web-server.service=www-service
 
-  #api_server:
-    #container_name: api_server
-    #build: ./api-server
+  api_server:
+    container_name: api_server
+    build: ./api-server
+    labels:
+      - traefik.http.routers.api-server.rule=Path(/api)
     # restart: always
-
 
   traefik:
     image: traefik
