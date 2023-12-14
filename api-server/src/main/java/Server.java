@@ -7,6 +7,8 @@ public class Server {
         app.get("/api/todo/{id}", todoController::getOne);
         app.post("/api/todo/", todoController::create);
         app.put("/api/todo/{id}", todoController::update);
+        app.put("/api/todo/{id}/setDone", todoController::setDone);
+        app.put("/api/todo/{id}/setUndone", todoController::setUndone);
         app.delete("/api/todo/{id}", todoController::delete);
     }
 }

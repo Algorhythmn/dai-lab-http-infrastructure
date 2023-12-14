@@ -10,7 +10,14 @@ public class Todo {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public void setDone() {
-        isDone = !isDone;
+        isDone = true;
+    }
+    public void setUndone() {
+        isDone = false;
     }
 }

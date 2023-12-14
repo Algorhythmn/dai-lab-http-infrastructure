@@ -1,4 +1,5 @@
 import io.javalin.http.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,23 @@ public class TodoController {
     }
 
     public void update(Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        String text = ctx.formParam("text");
+        todos.get(id).setText(text);
+    }
 
+    public void setDone(Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        todos.get(id).setDone();
+    }
+
+    public void setUndone(Context ctx) {
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        todos.get(id).setUndone();
     }
 
     public void delete(Context ctx) {
-
+        int id = Integer.parseInt(ctx.pathParam("id"));
+        todos.remove(id);
     }
 }
