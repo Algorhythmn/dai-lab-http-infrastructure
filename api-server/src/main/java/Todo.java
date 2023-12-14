@@ -10,6 +10,10 @@ public class Todo {
         return text;
     }
 
+    public boolean getIsDone() {
+        return isDone;
+    }
+
     public void setText(String text) {
         this.text = text;
     }

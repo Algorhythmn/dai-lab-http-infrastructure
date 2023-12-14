@@ -1,10 +1,12 @@
 import io.javalin.http.Context;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class TodoController {
-    private final List<Todo> todos = new ArrayList<>();
+    private final Map<Integer, Todo> todos = new HashMap<>();
+    private int idCount = 0;
 
     public void getAll(Context ctx) {
         ctx.json(todos);
@@ -12,32 +14,57 @@ public class TodoController {
 
     public void getOne(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
-        ctx.json(todos.get(id));
+        Todo todo = todos.get(id);
+        if (todo == null) {
+            ctx.status(404);
+        } else {
+            ctx.json(todo);
+        }
     }
 
     public void create(Context ctx) {
         String text = ctx.formParam("text");
-        todos.add(new Todo(text));
+        todos.put(++idCount, new Todo(text));
+        ctx.status(201);
     }
 
     public void update(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         String text = ctx.formParam("text");
-        todos.get(id).setText(text);
+        Todo todo = todos.get(id);
+        if (todo == null) {
+            ctx.status(404);
+        } else {
+            todo.setText(text);
+            ctx.status(200);
+        }
     }
 
     public void setDone(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
-        todos.get(id).setDone();
+        Todo todo = todos.get(id);
+        if (todo == null) {
+            ctx.status(404);
+        } else {
+            todo.setDone();
+            ctx.status(200);
+        }
     }
 
     public void setUndone(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
-        todos.get(id).setUndone();
+        Todo todo = todos.get(id);
+        if (todo == null) {
+            ctx.status(404);
+        } else {
+            todo.setUndone();
+            ctx.status(200);
+        }
     }
 
     public void delete(Context ctx) {
         int id = Integer.parseInt(ctx.pathParam("id"));
         todos.remove(id);
+        ctx.status(204);
     }
 }
