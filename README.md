@@ -16,4 +16,7 @@
 ## Step 3:
 
 Command to compile server api (needs to be executed from thew api-server folder)
-`mvn clean compile assembly:single
+`mvn clean compile assembly:single`
+
+Command to docker compose up with rebuilding all images:
+`docker compose up --build`

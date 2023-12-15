@@ -3,7 +3,7 @@ package ch.heig.dai.lab.http.api;
 import io.javalin.*;
 public class Server {
     public static void main(String[] args) {
-        Javalin app = Javalin.create().start(7000);
+        Javalin app = Javalin.create().start(80);
         TodoController todoController = new TodoController();
         app.get("/api/todo/all", todoController::getAll);
         app.get("/api/todo/{id}", todoController::getOne);
