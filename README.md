@@ -11,3 +11,9 @@
 ## Step 2:
 
 `docker compose up --build`
+
+
+## Step 3:
+
+Command to compile server api (needs to be executed from thew api-server folder)
+`mvn clean compile assembly:single
