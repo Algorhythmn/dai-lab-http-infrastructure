@@ -1,3 +1,4 @@
+# use the official nginx container image
 FROM nginx:alpine
 
 # copy the content into the container

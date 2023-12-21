@@ -9,7 +9,7 @@ services:
     volumes:
       - ./static-web-server/logs:/var/log/nginx
     labels:
-      - traefik.http.routers.static-web-server.rule=Host(`localhost`)
+      - traefik.http.routers.static-web-server.rule=Host(`static.localhost`)
 
   api_server:
     container_name: api_server

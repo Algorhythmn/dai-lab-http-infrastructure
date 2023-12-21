@@ -110,7 +110,7 @@ Once you're finished with the implementation, create a Dockerfile for the API se
 - [x] You can start and stop the API server using docker compose.
 - [x] You can access both the API and the static server from your browser.
 - [x] You can rebuild the docker image with docker compose.
-- [ ] You can do demo where use an API testing tool to show that all CRUD operations work.
+- [x] You can do demo where use an API testing tool to show that all CRUD operations work.
 - [ ] You have **documented** your implementation in your report.
 
 
@@ -134,8 +134,8 @@ The steps to follow for this section are thus:
 
 ### Acceptance criteria
 
-- [ ] You can do a demo where you start from an "empty" Docker environment (no container running) and using docker compose you can start your infrastructure with 3 containers: static server, dynamic server and reverse proxy
-- [ ] In the demo you can access each server from the browser in the demo. You can prove that the routing is done correctly through the reverse proxy.
+- [x] You can do a demo where you start from an "empty" Docker environment (no container running) and using docker compose you can start your infrastructure with 3 containers: static server, dynamic server and reverse proxy
+- [x] In the demo you can access each server from the browser in the demo. You can prove that the routing is done correctly through the reverse proxy.
 - [ ] You are able to explain in the documentation how you have implemented the solution and walk us through the configuration and the code.
 - [ ] You are able to explain in the documentation why a reverse proxy is useful to improve the security of the infrastructure.
 - [ ] You are able to explain in the documentation how to access the dashboard of Traefik and how it works.
