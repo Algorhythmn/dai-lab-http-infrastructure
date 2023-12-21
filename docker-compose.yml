@@ -2,22 +2,32 @@ version: '3.8'
 
 services:
   static_web_server:
-    container_name: static_web_server
+    #container_name: static-web-server
     build: ./static-web-server
     expose:
       - "80"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
+      #- ./reverse-proxy/traefik.yml:/etc/traefik/traefik.yml:ro
     labels:
       - traefik.http.routers.static-web-server.rule=Host(`static.localhost`)
+    deploy:
+      replicas:
+        5
 
   api_server:
-    container_name: api_server
+    #container_name: api_server
     build: ./api-server
     expose:
      - "80"
     labels:
       - traefik.http.routers.api-server.rule=PathPrefix(`/api/`)
+      - traefik.services.api-server.loadBalancer.sticky=true
+      - traefik.services.api-server.loadBalancer.sticky.cookie.name=MyBeloved
+      - traefik.services.api-server.loadBalancer.sticky.cookie.secure=true
+    deploy:
+      replicas:
+        5
 
   traefik:
     image: traefik
