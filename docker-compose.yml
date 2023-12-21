@@ -4,14 +4,12 @@ services:
   static_web_server:
     container_name: static_web_server
     build: ./static-web-server
-    # restart: always
-    #ports:
-     # - "8080:80"
+    expose:
+      - "80"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
     labels:
       - traefik.http.routers.static-web-server.rule=Host(`localhost`)
-      #- traefik.http.routers.static-web-server.service=www-service
 
   api_server:
     container_name: api_server
@@ -19,8 +17,7 @@ services:
     expose:
      - "80"
     labels:
-      - traefik.http.routers.api-server.rule=Path(`/api`)
-    # restart: always
+      - traefik.http.routers.api-server.rule=PathPrefix(`/api/`)
 
   traefik:
     image: traefik
@@ -29,7 +26,7 @@ services:
       - --providers.docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      #- /dev/null:/traefik.toml
+      #- /reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80" # Web-server
       - "8080:8080" # Dashboard
