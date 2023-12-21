@@ -16,10 +16,10 @@ services:
   api_server:
     container_name: api_server
     build: ./api-server
-    ports:
-     - "7000:80"
+    expose:
+     - "80"
     labels:
-      - traefik.http.routers.api-server.rule=Path(/api)
+      - traefik.http.routers.api-server.rule=Path(`/api`)
     # restart: always
 
   traefik:
@@ -29,6 +29,7 @@ services:
       - --providers.docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      #- /dev/null:/traefik.toml
     ports:
       - "80:80" # Web-server
       - "8080:8080" # Dashboard
