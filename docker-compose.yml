@@ -26,10 +26,11 @@ services:
      - "80"
     labels:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
-      - "traefik.http.routers.api-router.rule=PathPrefix(`/api/`)"
-      - "traefik.http.services.api-router.loadBalancer.sticky=true"
-      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.name=MyBeloved"
-      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.secure=true"
+      - "traefik.http.routers.api-router.rule=PathPrefix(`/api/`)" # the service will respond to path prefixed by /api
+      - "traefik.http.routers.api-router.service=api-router" # routes all requests to the service api-router
+      - "traefik.http.services.api-router.loadBalancer.sticky=true" # Enable sticky session
+      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.name=MyBelovedTest" # Name the cookie to be sent
+      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.secure=true" # Cookie is encrypted
 
    # To deploy statically a number of instances of this container
     #deploy:
@@ -39,7 +40,7 @@ services:
     image: traefik
     command:
       - "--api.insecure=true"  # Enable Traefik dashboard
-      - "--providers.docker" # Enable docker providers
+      - "--providers.docker=true" # Enable docker providers
       - "--providers.docker.exposedbydefault=true" # Do not expose containers except when explicitly told so
       - "--entrypoints.web.address=:80" # define address "web" on port 80
       - "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
