@@ -6,6 +6,7 @@ services:
     build: ./static-web-server
     expose:
       - "80"
+      - "443"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
       #- ./reverse-proxy/traefik.yml:/etc/traefik/traefik.yml:ro
@@ -41,7 +42,7 @@ services:
     command:
       - "--api.insecure=true"  # Enable Traefik dashboard
       - "--providers.docker=true" # Enable docker providers
-      - "--providers.docker.exposedbydefault=true" # Do not expose containers except when explicitly told so
+      - "--providers.docker.exposedbydefault=false" # Do not expose containers except when explicitly told so
       - "--entrypoints.web.address=:80" # define address "web" on port 80
       - "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
     volumes:
