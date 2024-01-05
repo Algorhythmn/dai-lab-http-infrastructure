@@ -70,7 +70,25 @@ To run this JAR file in a docker container we've created a new Docker image with
 Command to docker compose up with rebuilding all images:
 `docker compose up --build`
 
-## Step 4:
+## Step 4: Reverse proxy with Traefik
 
 Access the dashboard of Traefik:
 http://localhost:8080/dashboard/
+
+## Step 5: Scalability and load balancing
+
+## Step 6: Load balancing with round robin and sticky sessions
+
+## Step 7: Securing Traefik with HTTPS
+
+## Optional step 1: Management UI
+
+As a management UI for our docker environment we've chosen Portainer.
+Portainer is a webinterface that runs on a docker container and in which the docker environment can be orchestrated.
+
+The documentation how to use Portainer can be found under https://docs.portainer.io/
+
+To use Portainer we've added the service portainer in our docker compose file.
+The webinterface of Portainer can then be accessed via the following url: https://localhost:9443/
+
+## Optional step 2: Integration API
