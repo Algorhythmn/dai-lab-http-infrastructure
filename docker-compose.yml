@@ -50,6 +50,7 @@ services:
       - "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # copy the docker socket do that traefik can find containers
+      - ./reverse_proxy/logs:/var/log/traefik # mount traefik logs volumes
       #- /reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80" # Web-server
@@ -67,9 +68,9 @@ services:
       - ./api-website/logs:/var/log/nginx
     labels:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
-      - "traefik.http.routers.static-router.rule=Host(`localhost`)" #the domain the service will respond to
-      - "traefik.http.routers.static-router.entrypoints=web,websecure" # allow request only on web and websecure address defined on traeefik service
-      - "traefik.http.services.static-router.loadbalancer.server.port=80"
+      - "traefik.http.routers.dynamic-router.rule=Host(`localhost`)" #the domain the service will respond to
+      - "traefik.http.routers.dynamic-router.entrypoints=web,websecure" # allow request only on web and websecure address defined on traeefik service
+      - "traefik.http.services.dynamic-router.loadbalancer.server.port=80"
 
 
   portainer:
@@ -79,4 +80,6 @@ services:
     volumes:
       - ./portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
     restart: unless-stopped
