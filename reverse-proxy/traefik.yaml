@@ -1,0 +1,22 @@
+## Static configurations files
+
+api:
+  insecure: true
+  dashboard: true
+
+log:
+  filePath: /var/log/error.log
+
+# TODO - Change some fields to prove that load balancing is done
+accessLog:
+  filePath: /var/log/access.log
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+providers:
+  docker:
+    exposedByDefault: false

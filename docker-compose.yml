@@ -42,16 +42,19 @@ services:
 
   traefik:
     image: traefik
-    command:
-      - "--api.insecure=true"  # Enable Traefik dashboard
-      - "--providers.docker=true" # Enable docker providers
-      - "--providers.docker.exposedbydefault=false" # Do not expose containers except when explicitly told so
-      - "--entrypoints.web.address=:80" # define address "web" on port 80
-      - "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
+
+   #Not necessary since used in static config file
+    #command:
+      #- "--api.insecure=true"  # Enable Traefik dashboard
+      #- "--providers.docker=true" # Enable docker providers
+      #- "--providers.docker.exposedbydefault=false" # Do not expose containers except when explicitly told so
+      #- "--entrypoints.web.address=:80" # define address "web" on port 80
+      #- "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # copy the docker socket do that traefik can find containers
-      - ./reverse_proxy/logs:/var/log/traefik # mount traefik logs volumes
-      #- /reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
+      - ./reverse-proxy/logs:/var/log/ # mount traefik logs volumes
+      - ./reverse-proxy/cert:/etc/traefik/certificates # mount self-signed certificates
+      - ./reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
     ports:
       - "80:80" # Web-server
       - "8080:8080" # Dashboard
