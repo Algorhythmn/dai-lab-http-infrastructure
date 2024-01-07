@@ -9,11 +9,11 @@ services:
       - "443"
     volumes:
       - ./static-web-server/logs:/var/log/nginx
-      #- ./reverse-proxy/traefik.yml:/etc/traefik/traefik.yml:ro
     labels:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
       - "traefik.http.routers.static-router.rule=Host(`static.localhost`)" #the domain the service will respond to
       - "traefik.http.routers.static-router.entrypoints=web,websecure" # allow request only on web and websecure address defined on traeefik service
+      - "traefik.http.routers.static-router.tls=true" # activate tls on this router
       - "traefik.http.services.static-router.loadbalancer.server.port=80"
 
       # To deploy statically a number of instances of this container
@@ -30,7 +30,7 @@ services:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
       - "traefik.http.routers.api-router.rule=PathPrefix(`/api/`)" # the service will respond to path prefixed by /api
       - "traefik.http.routers.api-router.service=api-router" # routes all requests to the service api-router
-      - "traefik.http.services.myservice.loadbalancer.server.port=80"
+      - "traefik.http.services.api-router.loadbalancer.server.port=80"
       - "traefik.http.services.api-router.loadBalancer.sticky=true" # Enable sticky session
       - "traefik.http.services.api-router.loadBalancer.sticky.cookie.name=MyBelovedTest" # Name the cookie to be sent
       - "traefik.http.services.api-router.loadBalancer.sticky.cookie.secure=true" # Cookie is encrypted
@@ -53,18 +53,20 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # copy the docker socket do that traefik can find containers
       - ./reverse-proxy/logs:/var/log/ # mount traefik logs volumes
-      - ./reverse-proxy/cert:/etc/traefik/certificates # mount self-signed certificates
+      - ./reverse-proxy/certs:/etc/traefik/certs/ # mount self-signed certificates
       - ./reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
+      - ./reverse-proxy/selftls.yaml:/etc/traefik/dynamic/selftls.yaml
     ports:
       - "80:80" # Web-server
+      - "443:443"
       - "8080:8080" # Dashboard
 
 
   api_website:
     image: nginx:alpine
     expose:
-      - 80
-      - 443
+      - "80"
+      - "443"
     volumes:
       - ./api-website/nginx.conf:/etc/nginx/nginx.conf
       - ./api-website/content:/www/data
@@ -73,6 +75,7 @@ services:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
       - "traefik.http.routers.dynamic-router.rule=Host(`localhost`)" #the domain the service will respond to
       - "traefik.http.routers.dynamic-router.entrypoints=web,websecure" # allow request only on web and websecure address defined on traeefik service
+      - "traefik.http.routers.dynamic-router.tls=true" # activate tls on this router
       - "traefik.http.services.dynamic-router.loadbalancer.server.port=80"
 
 
