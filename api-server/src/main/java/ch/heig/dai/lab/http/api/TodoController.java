@@ -10,6 +10,7 @@ public class TodoController {
     private int idCount = 0;
 
     public void getAll(Context ctx) {
+        // System.out.println("getAll");
         ctx.json(todos);
     }
 

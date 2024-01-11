@@ -117,6 +117,8 @@ You can keep tracks of how many available servers in the Traefik dashboard by se
 
 ## Step 6: Load balancing with round robin and sticky sessions
 
+![img.png](img.png)
+
 ## Step 7: Securing Traefik with HTTPS
 
 ## Optional step 1: Management UI
@@ -130,3 +132,4 @@ To use Portainer we've added the service portainer in our docker compose file.
 The webinterface of Portainer can then be accessed via the following url: https://localhost:9443/
 
 ## Optional step 2: Integration API
+
