@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to display todos
     function displayTodos(todos) {
         todoList.innerHTML = '';
-        todos.forEach(todo => {
+        Object.keys(todos).forEach(key => {
             const li = document.createElement('li');
-            li.textContent = todo.text;
+            li.textContent = todos[key].text;
 
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.addEventListener('click', () => {
-                deleteTodo(todo.id);
+                deleteTodo(key);
             });
 
             li.appendChild(deleteBtn);
@@ -55,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify(todoData)
         })
-            .then(response => response.json())
-            .then(newTodo => {
+            .then(response => {
                 fetchTodos();
             });
     }

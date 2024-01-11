@@ -24,8 +24,8 @@ public class TodoController {
     }
 
     public void create(Context ctx) {
-        String text = ctx.formParam("text");
-        todos.put(++idCount, new Todo(text));
+        Todo todo = ctx.bodyAsClass(Todo.class);
+        todos.put(++idCount, todo);
         ctx.status(201);
     }
 

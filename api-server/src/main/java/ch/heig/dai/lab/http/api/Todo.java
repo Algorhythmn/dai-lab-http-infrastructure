@@ -4,6 +4,9 @@ public class Todo {
     private boolean isDone = false;
     private String text;
 
+    public Todo() {
+    }
+
     public Todo(String text) {
         this.text = text;
     }
@@ -23,6 +26,7 @@ public class Todo {
     public void setDone() {
         isDone = true;
     }
+
     public void setUndone() {
         isDone = false;
     }
