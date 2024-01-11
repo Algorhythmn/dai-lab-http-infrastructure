@@ -136,3 +136,5 @@ The webinterface of Portainer can then be accessed via the following url: https:
 
 ## Optional step 2: Integration API
 
+We've realised a simple website (api_website) which calls the api server to get the todos and shows them.
+Additional there is a form to create new todos and existing todos can be deleted.
