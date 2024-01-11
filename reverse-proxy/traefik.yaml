@@ -33,7 +33,7 @@ entryPoints:
 providers:
   docker:
     exposedByDefault: false
-  file:
+  file: # specify dynamic config file
     filename: "/etc/traefik/dynamic/selftls.yml"
     watch: true # allow traefik to watch for file change during its execution
 

@@ -26,32 +26,35 @@ services:
     build: ./api-server
     expose:
       - "80"
+      - "443"
     labels:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
       - "traefik.http.routers.api-router.rule=PathPrefix(`/api/`)" # the service will respond to path prefixed by /api
-      - "traefik.http.routers.api-router.service=api-router" # routes all requests to the service api-router
-      - "traefik.http.services.api-router.loadbalancer.server.port=80"
-      - "traefik.http.services.api-router.loadBalancer.sticky=true" # Enable sticky session
-      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.name=MyBelovedTest" # Name the cookie to be sent
-      - "traefik.http.services.api-router.loadBalancer.sticky.cookie.secure=true" # Cookie is encrypted
+      - "traefik.http.routers.api-router.service=api-service" # routes all requests to the service api-router
+      - "traefik.http.services.api-service.loadbalancer.server.port=80"
+      - "traefik.http.services.api-service.loadbalancer.server.scheme=https"
+      - "traefik.http.routers.api-router.tls=true" # activate tls on this router
+      - "traefik.http.services.api-service.loadBalancer.sticky=true" # Enable sticky session
+      - "traefik.http.services.api-service.loadBalancer.sticky.cookie.name=MyBelovedTest" # Name the cookie to be sent
+      - "traefik.http.services.api-service.loadBalancer.sticky.cookie.secure=true" # Cookie is encrypted
 
       # To deploy statically a number of instances of this container
       #deploy:
       # replicas: 5
 
 
-  traefik:
+  reverse-proxy:
     image: traefik
 
    #Not necessary since used in static config file
     #command:
-      #- "--api.insecure=true"  # Enable Traefik dashboard
+      #- "--api.insecure=true"  # Enable Traefik dashboard connection without logging
       #- "--providers.docker=true" # Enable docker providers
       #- "--providers.docker.exposedbydefault=false" # Do not expose containers except when explicitly told so
       #- "--entrypoints.web.address=:80" # define address "web" on port 80
       #- "--entrypoints.websecure.address=:443" # define address "websecure" on port 443
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # copy the docker socket do that traefik can find containers
+      - /var/run/docker.sock:/var/run/docker.sock # copy the docker sockets in order to allow traefik to find containers
       - ./reverse-proxy/logs:/var/log/ # mount traefik logs volumes
       - ./reverse-proxy/certs:/etc/traefik/certs/ # mount self-signed certificates
       - ./reverse-proxy/traefik.yaml:/etc/traefik/traefik.yaml
@@ -86,6 +89,4 @@ services:
     volumes:
       - ./portainer/data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      - "traefik.enable=true"
     restart: unless-stopped
