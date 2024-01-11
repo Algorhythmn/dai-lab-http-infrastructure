@@ -126,6 +126,7 @@ We add the following labels to enable sticky sessions to the API Java server ser
 - "traefik.http.services.api-service.loadBalancer.sticky.cookie.secure=true"
 ```
 We can see that request are redirected to the same servers below:
+
 ![img.png](img.png)
 
 ## Step 7: Securing Traefik with HTTPS
