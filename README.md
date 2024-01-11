@@ -115,6 +115,9 @@ docker compose up -d --scale <service-name>=<number of instance to create>
 
 You can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
 
+To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access logs files.
+For Javalin ???
+
 ## Step 6: Load balancing with round robin and sticky sessions
 
 ![img.png](img.png)
