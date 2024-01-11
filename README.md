@@ -119,7 +119,13 @@ To prove that load-balancing is correctly executed by the reverse-proxy for the 
 For Javalin ???
 
 ## Step 6: Load balancing with round robin and sticky sessions
-
+We add the following labels to enable sticky sessions to the API Java server service in the docker compose file:
+```
+- "traefik.http.services.api-service.loadBalancer.sticky=true"
+- "traefik.http.services.api-service.loadBalancer.sticky.cookie.name=MyBelovedTest"
+- "traefik.http.services.api-service.loadBalancer.sticky.cookie.secure=true"
+```
+We can see that request are redirected to the same servers below:
 ![img.png](img.png)
 
 ## Step 7: Securing Traefik with HTTPS
