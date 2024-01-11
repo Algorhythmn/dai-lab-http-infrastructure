@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch all todos
     function fetchTodos() {
-        fetch('https://localhost/api/todo/all')
+        fetch('/api/todo/all')
             .then(response => response.json())
             .then(todos => {
                 displayTodos(todos);
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to create a new todo
     function createTodo(todoData) {
-        fetch('https://localhost/api/todo/', {
+        fetch('/api/todo/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to delete a todo
     function deleteTodo(todoId) {
-        fetch(`https://localhost/api/todo/${todoId}`, {
+        fetch(`/api/todo/${todoId}`, {
             method: 'DELETE'
         })
             .then(response => {
