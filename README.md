@@ -143,6 +143,11 @@ tls:
       keyFile: "/etc/traefik/certs/key.pem"
 ```
 
+Now that Traefik has access to the certificates, we can add the following labels to enable tls on the different services:
+```
+- "traefik.http.routers.router-name.tls=true" 
+```
+
 ## Optional step 1: Management UI
 
 As a management UI for our docker environment we've chosen Portainer.

@@ -3,21 +3,6 @@ api:
   insecure: true
   dashboard: true
 
-log:
-  level: DEBUG
-  filePath: /var/log/error.log
-
-# TODO - Change some fields to prove that load balancing is done
-accessLog:
-  filePath: /var/log/access.log
-  filters:
-    statusCodes:
-      - "200"
-  fields:
-    defaultMode: keep
-    names:
-      ServiceURL: keep
-
 entryPoints:
   web:
     address: ":80"
