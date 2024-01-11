@@ -103,6 +103,16 @@ http://localhost:8080
 It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that Traefik founds thanks to its access to Docker sockets.  
 
 ## Step 5: Scalability and load balancing
+To deploy statically multiples instances we add the following commands to the docker compose files to the different services:
+```
+deploy:
+  replicas: 5
+```
+To deploy dynamically we use the following commands in the terminal where the docker compose file is situated:
+```
+docker compose up --scale <service-name>=<number of instance to create>
+```
+
 
 ## Step 6: Load balancing with round robin and sticky sessions
 
