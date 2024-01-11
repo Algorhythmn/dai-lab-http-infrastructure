@@ -110,9 +110,10 @@ deploy:
 ```
 To deploy dynamically we use the following commands in the terminal where the docker compose file is situated:
 ```
-docker compose up --scale <service-name>=<number of instance to create>
+docker compose up -d --scale <service-name>=<number of instance to create>
 ```
 
+You can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
 
 ## Step 6: Load balancing with round robin and sticky sessions
 
