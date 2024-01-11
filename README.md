@@ -71,11 +71,49 @@ Command to docker compose up with rebuilding all images:
 `docker compose up --build`
 
 ## Step 4: Reverse proxy with Traefik
+How we implement the solution:
+For this first part we will be using the docker compose file, commands given to traefik and labels given to the other different services.
 
-Access the dashboard of Traefik:
-http://localhost:8080/dashboard/
+To establish basic connections, we gave command the following commands:
+```
+commands:
+- "--api.insecure=true"  
+- "--providers.docker=true" 
+- "--providers.docker.exposedbydefault=false" 
+- "--entrypoints.web.address=:80"
+- "--entrypoints.websecure.address=:443"
+
+And we mount the following volume
+volumes:
+- /var/run/docker.sock:/var/run/docker.sock
+ports:
+- "80:80" 
+- "443:443"
+- "8080:8080" 
+```
+
+Security benefits of a reverse-proxy:
+- It is the only element that is exposed directly to the Internet.
+- It allow to distribute connections to multiple instances of the same servers to prevent overloads
+
+To acccess Traefik's dashboard go to the following address:
+```
+http://localhost:8080
+```
+It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that Traefik founds thanks to its access to Docker sockets.  
 
 ## Step 5: Scalability and load balancing
+To deploy statically multiples instances we add the following commands to the docker compose files to the different services:
+```
+deploy:
+  replicas: 5
+```
+To deploy dynamically we use the following commands in the terminal where the docker compose file is situated:
+```
+docker compose up -d --scale <service-name>=<number of instance to create>
+```
+
+You can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
 
 ## Step 6: Load balancing with round robin and sticky sessions
 
