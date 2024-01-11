@@ -116,7 +116,9 @@ docker compose up -d --scale <service-name>=<number of instance to create>
 You can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
 
 To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access logs files.
-For Javalin ???
+
+TODO - add proof for static and dynamic server
+TODO - add Javalin's way
 
 ## Step 6: Load balancing with round robin and sticky sessions
 We add the following labels to enable sticky sessions to the API Java server service in the docker compose file:
@@ -130,6 +132,16 @@ We can see that request are redirected to the same servers below:
 ![img.png](img.png)
 
 ## Step 7: Securing Traefik with HTTPS
+Since we need to define a static configuration file for Traefik to define the dynamic configuration files for the self-signed certificates, we moved some previously defined command to this file.
+
+
+The dynamic config file contains the following to defined the certificates that will be add to the default store of Traefik:
+```
+tls:
+  certificates:
+    - certFile: "/etc/traefik/certs/cert.pem"
+      keyFile: "/etc/traefik/certs/key.pem"
+```
 
 ## Optional step 1: Management UI
 
