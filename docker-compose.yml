@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.static-router.rule=Host(`static.localhost`)" #the domain the service will respond to
       # - "traefik.http.routers.static-router.entrypoints=web,websecure" # allow request only on web and websecure address defined on traeefik service
       - "traefik.http.routers.static-router.tls=true" # activate tls on this router
-      - "traefik.http.services.static-router.loadbalancer.server.port=80"
+      - "traefik.http.services.static-service.loadbalancer.server.port=80"
 
       # To deploy statically a number of instances of this container
       #deploy:
@@ -53,7 +53,7 @@ services:
       - "traefik.enable=true" # Explicitly tell traefik to expose this container
       - "traefik.http.routers.dynamic-router.rule=Host(`localhost`)" #the domain the service will respond to
       - "traefik.http.routers.dynamic-router.tls=true" # activate tls on this router
-      - "traefik.http.services.dynamic-router.loadbalancer.server.port=80"
+      - "traefik.http.services.dynamic-service.loadbalancer.server.port=80"
 
 
   reverse-proxy:

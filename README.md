@@ -103,6 +103,11 @@ http://localhost:8080
 It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that Traefik founds thanks to its access to Docker sockets.  
 
 ## Step 5: Scalability and load balancing
+To enable load balancing on our services we add the label:
+```
+- "traefik.http.services.service-name.loadbalancer.server.port=80"
+```
+
 To deploy statically multiples instances we add the following commands to the docker compose files to the different services:
 ```
 deploy:
@@ -113,7 +118,7 @@ To deploy dynamically we use the following commands in the terminal where the do
 docker compose up -d --scale <service-name>=<number of instance to create>
 ```
 
-You can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
+We can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
 
 To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access logs files.
 
