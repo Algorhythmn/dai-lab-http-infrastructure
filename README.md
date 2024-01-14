@@ -72,9 +72,13 @@ Command to docker compose up with rebuilding all images:
 
 ## Step 4: Reverse proxy with Traefik
 
+The fourth step of this lab was to configure a reverse proxy with Traefik.
+
 How we implement the solution:
-For this first part we will be using the docker compose file, commands given to traefik and labels given to the other
-different services.
+For this first part we used the docker compose file. We configured commands for the traefik container and labels for the
+other containers/services to define how they should be managed by Traefik.
+In addition to the explanations below, all the configuration (commands, labels, ...) are documented directly in the
+docker compose file.
 
 To establish basic connections, we gave command the following commands:
 
@@ -98,16 +102,16 @@ ports:
 Security benefits of a reverse-proxy:
 
 - It is the only element that is exposed directly to the Internet.
-- It allow to distribute connections to multiple instances of the same servers to prevent overloads
+- It allows to distribute connections to multiple instances of the same servers to prevent overloads
 
-To acccess Traefik's dashboard go to the following address:
+The Dashboard of Traefik can be accessed via the following address:
 
 ```
 http://localhost:8080
 ```
 
-It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that
-Traefik founds thanks to its access to Docker sockets.
+On this dashboard all entrypoint, routers and services are listed that we've defined in the commands above and all HTTP
+services that Traefik found thanks to its access to Docker sockets.
 
 ## Step 5: Scalability and load balancing
 
@@ -135,10 +139,7 @@ We can keep tracks of how many available servers in the Traefik dashboard by sel
 IP address of those servers.
 
 To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access
-logs files.
-
-TODO - add proof for static and dynamic server
-TODO - add Javalin's way
+logs files. In those logs we can see that each request is redirected to a different server.
 
 ## Step 6: Load balancing with round robin and sticky sessions
 
@@ -150,8 +151,10 @@ We add the following labels to enable sticky sessions to the API Java server ser
 - "traefik.http.services.api-service.loadBalancer.sticky.cookie.secure=true"
 ```
 
-We can see that request are redirected to the same servers below:
-
+To prove that sticky sessions are correctly executed by the reverse-proxy for the API Java server we've added a line in
+our Javalin API server to write in the terminal whenever the route '/api/todo/all' is called.
+When calling the api server with the same cookie, we can see that the request are redirected to the same server. When
+deleting the cookie and calling the api server again, we can see that the request are redirected to another server.
 ![img.png](img.png)
 
 ## Step 7: Securing Traefik with HTTPS
@@ -159,8 +162,8 @@ We can see that request are redirected to the same servers below:
 Since we need to define a static configuration file for Traefik to define the dynamic configuration files for the
 self-signed certificates, we moved some previously defined command to this file.
 
-The dynamic config file contains the following to defined the certificates that will be add to the default store of
-Traefik:
+The dynamic config file contains the following lines to define the certificates that will be added to the default store
+of Traefik:
 
 ```
 tls:
@@ -188,5 +191,5 @@ The webinterface of Portainer can then be accessed via the following url: https:
 
 ## Optional step 2: Integration API
 
-We've realised a simple website (api_website) which calls the api server to get the todos and shows them.
-Additional there is a form to create new todos and existing todos can be deleted.
+We've implemented a simple website (api_website) which calls the api server to get the todos and shows them.
+On this website there is a form-field to create new todos and buttons to delete the existing todos.
