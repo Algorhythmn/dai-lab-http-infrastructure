@@ -1,6 +1,7 @@
 package ch.heig.dai.lab.http.api;
 
 import io.javalin.*;
+
 public class Server {
     public static void main(String[] args) {
         Javalin app = Javalin.create().start(80);

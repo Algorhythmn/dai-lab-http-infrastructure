@@ -71,10 +71,13 @@ Command to docker compose up with rebuilding all images:
 `docker compose up --build`
 
 ## Step 4: Reverse proxy with Traefik
+
 How we implement the solution:
-For this first part we will be using the docker compose file, commands given to traefik and labels given to the other different services.
+For this first part we will be using the docker compose file, commands given to traefik and labels given to the other
+different services.
 
 To establish basic connections, we gave command the following commands:
+
 ```
 commands:
 - "--api.insecure=true"  
@@ -93,54 +96,72 @@ ports:
 ```
 
 Security benefits of a reverse-proxy:
+
 - It is the only element that is exposed directly to the Internet.
 - It allow to distribute connections to multiple instances of the same servers to prevent overloads
 
 To acccess Traefik's dashboard go to the following address:
+
 ```
 http://localhost:8080
 ```
-It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that Traefik founds thanks to its access to Docker sockets.  
+
+It will list all entrypoints, routers and services that we've defined in the commands above and all HTTP services that
+Traefik founds thanks to its access to Docker sockets.
 
 ## Step 5: Scalability and load balancing
+
 To enable load balancing on our services we add the label:
+
 ```
 - "traefik.http.services.service-name.loadbalancer.server.port=80"
 ```
 
-To deploy statically multiples instances we add the following commands to the docker compose files to the different services:
+To deploy statically multiples instances we add the following commands to the docker compose files to the different
+services:
+
 ```
 deploy:
   replicas: 5
 ```
+
 To deploy dynamically we use the following commands in the terminal where the docker compose file is situated:
+
 ```
 docker compose up -d --scale <service-name>=<number of instance to create>
 ```
 
-We can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the IP address of those servers.
+We can keep tracks of how many available servers in the Traefik dashboard by selecting the relevant service and see the
+IP address of those servers.
 
-To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access logs files.
+To prove that load-balancing is correctly executed by the reverse-proxy for the nginx servers we can look at the access
+logs files.
 
 TODO - add proof for static and dynamic server
 TODO - add Javalin's way
 
 ## Step 6: Load balancing with round robin and sticky sessions
+
 We add the following labels to enable sticky sessions to the API Java server service in the docker compose file:
+
 ```
 - "traefik.http.services.api-service.loadBalancer.sticky=true"
 - "traefik.http.services.api-service.loadBalancer.sticky.cookie.name=MyBelovedTest"
 - "traefik.http.services.api-service.loadBalancer.sticky.cookie.secure=true"
 ```
+
 We can see that request are redirected to the same servers below:
 
 ![img.png](img.png)
 
 ## Step 7: Securing Traefik with HTTPS
-Since we need to define a static configuration file for Traefik to define the dynamic configuration files for the self-signed certificates, we moved some previously defined command to this file.
 
+Since we need to define a static configuration file for Traefik to define the dynamic configuration files for the
+self-signed certificates, we moved some previously defined command to this file.
 
-The dynamic config file contains the following to defined the certificates that will be add to the default store of Traefik:
+The dynamic config file contains the following to defined the certificates that will be add to the default store of
+Traefik:
+
 ```
 tls:
   certificates:
@@ -148,7 +169,9 @@ tls:
       keyFile: "/etc/traefik/certs/key.pem"
 ```
 
-Now that Traefik has access to the certificates, we can add the following labels to enable tls on the different services:
+Now that Traefik has access to the certificates, we can add the following labels to enable tls on the different
+services:
+
 ```
 - "traefik.http.routers.router-name.tls=true" 
 ```
