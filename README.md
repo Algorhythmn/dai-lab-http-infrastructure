@@ -26,10 +26,10 @@ With the second step of this lab we've created our docker-compose.yml file.
 The services in the docker compose file can be started by using the following command:
 `docker compose up`
 
-Use the following command to start the services in the docker compose file and additionally rebuild the images before:
+The following command is used to rebuild the images first and then start the services in the docker compose file: 
 `docker compose up --build`
 
-Command to stop the docker services in the docker compose file:
+Command to stop the services in the docker compose file:
 `docker compose down`
 
 The configuration of our docker-compose.yml file we directly documented in this file.
@@ -44,25 +44,25 @@ repository.
 
 Our api server supports the following operations:
 Read:
-GET /api/todo/all > get all todos
-GET /api/todo/{id} > get a specific todo
+- GET /api/todo/all > get all todos
+- GET /api/todo/{id} > get a specific todo
 
 Create:
-POST /api/todo/ > create a todo
+- POST /api/todo/ > create a todo
 (the text of the todo needs to be transmitted in the body of the request: the key name is 'text')
 
 Update:
-PUT /api/todo/{id} > update the text of a specific todo
+- PUT /api/todo/{id} > update the text of a specific todo
 (the text of the todo needs to be transmitted in the body of the request: the key name is 'text')
-PUT /api/todo/{id}/setDone > mark a specific todo as done
-PUT /api/todo/{id}/setUnone > mark a specific todo as undone
+- PUT /api/todo/{id}/setDone > mark a specific todo as done
+- PUT /api/todo/{id}/setUnone > mark a specific todo as undone
 
 Delete:
-DELETE /api/todo/{id} > delete a specific todo
+- DELETE /api/todo/{id} > delete a specific todo
 
 To be able to run our Javalin API server in a Docker container we need to create a JAR file from our. To do so we use
-maven.
-Command to compile server api (needs to be executed from thew api-server folder)
+Maven.
+Command to compile our API server (needs to be executed from the api-server folder)
 `mvn clean compile assembly:single`
 
 To run this JAR file in a docker container we've created a new Docker image with the Dockerfile 'api-server/Dockerfile'.
