@@ -112,7 +112,7 @@ Update:
 - PUT /api/todo/{id} > update the text of a specific todo
 (the text of the todo needs to be transmitted in the body of the request: the key name is 'text')
 - PUT /api/todo/{id}/setDone > mark a specific todo as done
-- PUT /api/todo/{id}/setUnone > mark a specific todo as undone
+- PUT /api/todo/{id}/setUndone > mark a specific todo as undone
 
 Delete:
 - DELETE /api/todo/{id} > delete a specific todo
