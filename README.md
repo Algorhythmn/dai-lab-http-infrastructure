@@ -94,7 +94,6 @@ All configurations, code and the Dockerfile for the API server are located in th
 repository.
 
 To implement our API server we created the following classes :
-
 - Server: Creation of the Javalin Server and an instance of TodoController + mapping the HTTP routes to methods of the
   TodoController
 - TodoController: Implementation of all the methods that are called via the HTTP routes
