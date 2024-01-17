@@ -1,7 +1,10 @@
 version: '3.8'
 
 services:
+
+  # configure a service for our static web server
   static_web_server:
+    # use the Dockerfile in the directory static-web-server to build an image
     build: ./static-web-server
     expose:
       - "80"
